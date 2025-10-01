@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı POST Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        .container {
+            background: #0a0a0a;
+            padding: 30px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #000;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .info { color: #00ccff; }
+        .timestamp { color: #ffaa00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ n8n POST Durumu Test</h1>
+
+        <button onclick="testPost()">🚀 POST İsteği Gönder</button>
+        <button onclick="clearOutput()">🗑️ Çıktıyı Temizle</button>
+
+        <div class="output" id="output">
+            <span class="info">Hazır. Test butonuna basın...</span>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = 'https://n8n.botfusions.com/webhook/a5015f1b-85e2-417f-8c95-d4b91698ec6e';
+        const output = document.getElementById('output');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('tr-TR');
+            const line = `<span class="timestamp">[${timestamp}]</span> <span class="${type}">${message}</span>\n`;
+            output.innerHTML += line;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            output.innerHTML = '<span class="info">Çıktı temizlendi. Test butonuna basın...</span>\n';
+        }
+
+        async function testPost() {
+            clearOutput();
+
+            const testPayload = {
+                message: "Merhaba! Bu bir POST test mesajıdır.",
+                conversation_id: `test_${Date.now()}`,
+                metadata: {
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    testMode: true
+                }
+            };
+
+            log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'info');
+            log('🚀 POST İsteği Başlatılıyor...', 'info');
+            log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'info');
+            log('', 'info');
+
+            log(`📡 Webhook URL: ${WEBHOOK_URL}`, 'info');
+            log(`📤 Method: POST`, 'info');
+            log(`📦 Content-Type: application/json`, 'info');
+            log('', 'info');
+
+            log('📤 Gönderilen Payload:', 'info');
+            log(JSON.stringify(testPayload, null, 2), 'info');
+            log('', 'info');
+
+            const startTime = Date.now();
+
+            try {
+                log('⏳ İstek gönderiliyor...', 'info');
+
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testPayload)
+                });
+
+                const duration = Date.now() - startTime;
+
+                log('', 'info');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'success');
+                log('✅ YANIT ALINDI', 'success');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'success');
+                log('', 'info');
+
+                log(`📊 HTTP Status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+                log(`⏱️ Yanıt Süresi: ${duration}ms`, 'info');
+                log('', 'info');
+
+                log('📥 Response Headers:', 'info');
+                const headers = {};
+                response.headers.forEach((value, key) => {
+                    headers[key] = value;
+                    log(`   ${key}: ${value}`, 'info');
+                });
+                log('', 'info');
+
+                const contentType = response.headers.get('content-type');
+                log(`📄 Content-Type: ${contentType}`, 'info');
+                log('', 'info');
+
+                // Read response body
+                const responseText = await response.text();
+
+                log('📥 Response Body (Raw):', 'info');
+                log(responseText || '(boş)', response.ok ? 'success' : 'error');
+                log('', 'info');
+
+                // Try to parse as JSON
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        const jsonData = JSON.parse(responseText);
+                        log('✅ JSON Parse Başarılı:', 'success');
+                        log(JSON.stringify(jsonData, null, 2), 'success');
+                        log('', 'info');
+
+                        // Check expected fields
+                        log('🔍 Beklenen Alan Kontrolü:', 'info');
+                        log(`   response: ${jsonData.response ? '✅' : '❌'}`, jsonData.response ? 'success' : 'error');
+                        log(`   conversation_id: ${jsonData.conversation_id ? '✅' : '❌'}`, jsonData.conversation_id ? 'success' : 'error');
+                        log(`   message_id: ${jsonData.message_id ? '✅' : '❌'}`, jsonData.message_id ? 'success' : 'info');
+                        log(`   timestamp: ${jsonData.timestamp ? '✅' : '❌'}`, jsonData.timestamp ? 'success' : 'info');
+
+                    } catch (e) {
+                        log('❌ JSON Parse Hatası:', 'error');
+                        log(e.message, 'error');
+                    }
+                } else {
+                    log('ℹ️ JSON değil, plain text olarak işlendi', 'info');
+                }
+
+                log('', 'info');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'success');
+                log(response.ok ? '✅ TEST BAŞARILI' : '⚠️ HTTP HATA KODU ALINDI', response.ok ? 'success' : 'error');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'success');
+
+            } catch (error) {
+                const duration = Date.now() - startTime;
+
+                log('', 'info');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'error');
+                log('❌ HATA OLUŞTU', 'error');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'error');
+                log('', 'info');
+
+                log(`⏱️ Geçen Süre: ${duration}ms`, 'info');
+                log(`🚨 Hata Tipi: ${error.name}`, 'error');
+                log(`💬 Hata Mesajı: ${error.message}`, 'error');
+                log('', 'info');
+
+                log('🔍 Olası Nedenler:', 'info');
+                if (error.name === 'TypeError' || error.message.includes('Failed to fetch')) {
+                    log('   • Network/CORS hatası', 'error');
+                    log('   • Webhook URL erişilemiyor', 'error');
+                    log('   • n8n sunucusu down olabilir', 'error');
+                } else if (error.name === 'AbortError') {
+                    log('   • İstek zaman aşımına uğradı', 'error');
+                } else {
+                    log('   • Bilinmeyen hata', 'error');
+                }
+
+                log('', 'info');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'error');
+                log('❌ TEST BAŞARISIZ', 'error');
+                log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'error');
+            }
+        }
+
+        // Auto-run on page load after 1 second
+        setTimeout(() => {
+            log('🚀 Otomatik test 1 saniye sonra başlayacak...', 'info');
+            setTimeout(testPost, 1000);
+        }, 100);
+    </script>
+</body>
+</html>

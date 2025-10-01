@@ -1,0 +1,40 @@
+{
+  "name": "chat-webhook-server",
+  "version": "1.0.0",
+  "description": "ChatGPT-style webhook integration server",
+  "main": "webhook-server.js",
+  "scripts": {
+    "start": "node webhook-server.js",
+    "dev": "nodemon webhook-server.js",
+    "test": "node test-webhook.js",
+    "health": "node -e \"require('http').get('http://localhost:3000/health', r => r.on('data', d => console.log(d.toString())))\"",
+    "prod": "NODE_ENV=production node webhook-server.js"
+  },
+  "keywords": [
+    "webhook",
+    "chat",
+    "api",
+    "express",
+    "chatgpt",
+    "ai",
+    "conversation"
+  ],
+  "author": "Claude Code",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/chat-webhook-server"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  }
+}

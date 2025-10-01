@@ -1,0 +1,1 @@
+https://www.figma.com/design/KD0IoXdf8abN1rnDpJro9V/ChatGPT-Redesign--Community-?node-id=4-1605&p=f&t=kfDimSuzUZXV5Bsw-0

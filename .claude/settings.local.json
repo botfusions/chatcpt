@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "WebFetch(domain:www.figma.com)",
+      "Bash(curl -X POST \"https://n8n.botfusions.com/webhook-test/a5015f1b-85e2-417f-8c95-d4b91698ec6e\" )",
+      "Bash(curl -k -X POST \"https://n8n.botfusions.com/webhook-test/a5015f1b-85e2-417f-8c95-d4b91698ec6e\" -H \"Content-Type: application/json\" -d \"{\"\"message\"\":\"\"Merhaba, bu bir test mesajıdır.\"\",\"\"conversation_id\"\":\"\"test_1743717600000\"\",\"\"metadata\"\":{\"\"timestamp\"\":\"\"2025-10-01T12:00:00.000Z\"\",\"\"testMode\"\":true}}\" -w \"\\n\\nHTTP Status: %{http_code}\\nTime Total: %{time_total}s\\n\" --connect-timeout 10 --max-time 30 -v)",
+      "Bash(powershell -Command \"$body = @{message=''Merhaba, bu bir test mesajıdır.'';conversation_id=''test_1743717600000'';metadata=@{timestamp=''2025-10-01T12:00:00.000Z'';testMode=$true}} | ConvertTo-Json -Depth 3; try { $response = Invoke-WebRequest -Uri ''https://n8n.botfusions.com/webhook-test/a5015f1b-85e2-417f-8c95-d4b91698ec6e'' -Method POST -Body $body -ContentType ''application/json'' -TimeoutSec 30 -UseBasicParsing; Write-Host ''HTTP Status:'' $response.StatusCode; Write-Host ''Response:''; Write-Host $response.Content } catch { Write-Host ''Error:'' $_Exception.Message; Write-Host ''Status:'' $_Exception.Response.StatusCode.value__ }\")",
+      "Bash(python test_webhook.py:*)",
+      "Bash(del test_webhook.py)",
+      "Bash(start index.html)",
+      "Bash(start quick-test.html)",
+      "Bash(curl -X POST \"https://n8n.botfusions.com/webhook/a5015f1b-85e2-417f-8c95-d4b91698ec6e\" -H \"Content-Type: application/json\" -d \"{\"\"message\"\":\"\"Test mesajı\"\",\"\"conversation_id\"\":\"\"test_123\"\"}\" -v)",
+      "Bash(curl -k -X POST \"https://n8n.botfusions.com/webhook/a5015f1b-85e2-417f-8c95-d4b91698ec6e\" -H \"Content-Type: application/json\" -d \"{\"\"message\"\":\"\"Merhaba, bu bir test mesajıdır.\"\",\"\"conversation_id\"\":\"\"test_1743717600000\"\",\"\"metadata\"\":{\"\"timestamp\"\":\"\"2025-10-01T12:00:00.000Z\"\",\"\"testMode\"\":true}}\" -w \"\\n\\nHTTP Status: %{http_code}\\nTime Total: %{time_total}s\\n\" --connect-timeout 10 --max-time 30 -v)",
+      "Bash(powershell -Command \"$body = @{message=''Merhaba, bu bir test mesajıdır.'';conversation_id=''test_1743717600000'';metadata=@{timestamp=''2025-10-01T12:00:00.000Z'';testMode=$true}} | ConvertTo-Json -Depth 3; try { $response = Invoke-WebRequest -Uri ''https://n8n.botfusions.com/webhook/a5015f1b-85e2-417f-8c95-d4b91698ec6e'' -Method POST -Body $body -ContentType ''application/json'' -TimeoutSec 30 -UseBasicParsing; Write-Host ''HTTP Status:'' $response.StatusCode; Write-Host ''Response:''; Write-Host $response.Content } catch { Write-Host ''Error:'' $_Exception.Message; Write-Host ''Status:'' $_Exception.Response.StatusCode.value__ }\")",
+      "Bash(cd:*)",
+      "Bash(git clone:*)",
+      "Read(//c/Users/user/Downloads/Project Claude/Figma/**)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n🎉 Initial commit: ChatCPT - Modern Chat Interface\n\n✨ Features:\n- Modern responsive chat UI\n- n8n webhook integration (POST method)\n- 3 retry attempts with exponential backoff\n- Alafranga-style stable error handling\n- LocalStorage conversation history\n- Typing indicator with 2s minimum delay\n- Detailed console logging\n- Mobile responsive design\n\n🔧 Technical Stack:\n- Vanilla JavaScript (ES6+)\n- CSS3 with modern animations\n- Fetch API with AbortController\n- LocalStorage for persistence\n\n📦 Core Files:\n- index.html: Main HTML structure\n- app.js: JavaScript logic + webhook integration\n- styles.css: Modern responsive styling\n- README.md: Comprehensive documentation\n\n🚀 Alafranga tarzı stabil webhook entegrasyonu ile geliştirilmiştir.\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

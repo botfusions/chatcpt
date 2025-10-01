@@ -9,7 +9,7 @@ Modern, responsive chat arayüzü ile n8n webhook entegrasyonu.
 - 🔄 n8n webhook entegrasyonu
 - 📱 Mobil uyumlu
 - 💾 LocalStorage ile sohbet geçmişi
-- 🔄 3 deneme + exponential backoff (Alafranga tarzı)
+- 🔄 3 deneme + exponential backoff (stabil bağlantı)
 - 🎯 Typing indicator animasyonu
 - 📊 Detaylı console logging
 
@@ -207,4 +207,4 @@ Sorularınız için issue açabilirsiniz.
 
 ---
 
-**Alafranga tarzı stabil webhook entegrasyonu ile geliştirilmiştir** 🚀
+**Botfusions.com tarafından geliştirilmiştir** 🚀

@@ -224,7 +224,7 @@ const WEBHOOK_CONFIG = {
 // ============================================================================
 
 /**
- * Send message to webhook server using POST method (with Alafranga-style error handling)
+ * Send message to webhook server using POST method (with Botfusions.com stable error handling)
  */
 async function sendToWebhook(message, conversationId) {
     try {
@@ -274,10 +274,10 @@ async function sendToWebhook(message, conversationId) {
 }
 
 /**
- * Normalize different webhook response formats (Alafranga compatible)
+ * Normalize different webhook response formats (flexible and stable)
  */
 function normalizeWebhookResponse(data, conversationId) {
-    // Priority 1: 'output' field (Alafranga format)
+    // Priority 1: 'output' field (recommended format)
     if (data.output) {
         return {
             success: true,
@@ -356,10 +356,10 @@ function normalizeWebhookResponse(data, conversationId) {
 }
 
 /**
- * Send message to webhook with retry mechanism (Alafranga style - 3 attempts with exponential backoff)
+ * Send message to webhook with retry mechanism (3 attempts with exponential backoff)
  */
 async function sendToWebhookWithRetry(message, conversationId, attempt = 0) {
-    const maxRetries = 3; // Alafranga uses 3 retries
+    const maxRetries = 3; // 3 stable retry attempts
 
     try {
         console.log(`[Webhook Attempt ${attempt + 1}/${maxRetries}]`);
